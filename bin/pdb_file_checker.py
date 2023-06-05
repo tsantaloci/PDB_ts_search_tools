@@ -10,9 +10,9 @@ class atom(object):
         self.residue = residue
         self.residue_number = residue_number
         self.chain_id = chain_id
-        self.xcoord = xcoord
-        self.ycoord = ycoord
-        self.zcoord = zcoord
+        self.xcoord = float(xcoord)
+        self.ycoord = float(ycoord)
+        self.zcoord = float(zcoord)
 def atom_creator(file_1):
     """
     makes atoms objects for a pdb files
