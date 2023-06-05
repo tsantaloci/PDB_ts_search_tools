@@ -68,17 +68,17 @@ def average_finder(list1):
 def main():
     file_1 = '../files/ts-10-irc2-out.pdb'
    # file_2 = '../files/ts-12-irc2-out.pdb'
-   # file_2 = '../files/ts-11-irc2-out.pdb'
-    file_2 = '../files/ts-02-irc2-out.pdb'
+    file_2 = '../files/ts-11-irc2-out.pdb'
+    #file_2 = '../files/ts-02-irc2-out.pdb'
    # file_1 = 'ts-12-irc2-out.pdb'
+
+
     repeats = []
     value_1 = atom_creator(file_1)
     value_2 = atom_creator(file_2)
     xchg,ychg,zchg = difference_finder(value_1,value_2)
-    xavgchg = average_finder(xchg)
-    yavgchg = average_finder(ychg)
-    zavgchg = average_finder(zchg)
-    
+
+    xavgchg, yavgchg, zavgchg = average_finder(xchg), average_finder(ychg), average_finder(zchg) 
     
     print('average percent change for the x coordinate: '+ str(xavgchg))
     print('average percent change for the y coordinate: '+ str(yavgchg))
@@ -93,11 +93,11 @@ def main():
         repeats.append(file_2)
     '''
     Uncomment to compare a list of files to one file
-    file_list = []
     os.chdir('../files')
     file_1 = []
-    for i in os.listdir():
-        file_list.append(i)
+
+    file_list = [i for i in os.listdir()]
+
     for file_2 in file_list:
         if file_1 == file_2:
             pass
@@ -126,7 +126,8 @@ def main():
     print(repeats)
     '''
 
-    
      
     return
-main()
+
+if __name__ == '__main__':
+    main()

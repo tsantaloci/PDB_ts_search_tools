@@ -1,1 +1,6 @@
 files/
+*.csv
+*.txt
+*.tex
+*.png
+*.pdb
