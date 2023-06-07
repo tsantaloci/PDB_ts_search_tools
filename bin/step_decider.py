@@ -59,7 +59,8 @@ def answer_3(atm_dict):
 
 def answer_4(atm_dict):
     #print(atm_dict.keys())
-    a = bond_length(atm_dict['N','LEU','207','A'],atm_dict['C','CS1','206','A'])
+    #a = bond_length(atm_dict['N','LEU','207','A'],atm_dict['C','CS1','206','A'])
+    a = bond_length(atm_dict['N','LEU','207','A'],atm_dict['C','LEU','206','A'])
     #print(a)
     if a < 1.69:
         return 'Y'
@@ -88,13 +89,27 @@ def main():
 
     df = {
         'path':[],
+        'step':[],
         q1:[],
         q2:[],
         q3:[],
-        q4:[],
-        'step':[]
+        q4:[]
     }
     file = [file_1,file_2,file_3,file_4,file_5,file_6,file_7,file_8,file_9]
+    file = []
+    with open('list','r') as fp:
+        data = fp.readlines()
+        for line in data:
+            line_2 = line.strip().split('/')
+            new_list = [x for x in line_2 if x != '']
+            print(line_2)
+            print(line)
+            print(new_list)
+            if 'irc' in line:
+                file.append(line.strip()+new_list[-2]+'-'+new_list[-1]+'-'+'out.pdb')
+            else:
+                file.append(line.strip()+new_list[-1].replace('/','')+'-'+'out.pdb')
+    print(file)
     for pdb in file:
 
 
@@ -140,7 +155,13 @@ def main():
         tot_cs1_leu = leu_A_207+casn_A_206
         atm_dict = atm_dict_creator(tot_cs1_leu)
         q_4 = answer_4(atm_dict)
-        df['path'].append(pdb)
+        pdb = pdb.split('/')
+        new_list = [x for x in pdb if x != '']
+        path = new_list[0:-1]
+        new_path = ''
+        for i in path:
+           new_path += i+'/'
+        df['path'].append(new_path)
         df[q1].append(q_1)
         df[q2].append(q_2)
         df[q3].append(q_3)
@@ -162,7 +183,9 @@ def main():
         #print(q_4)
         print(q_1,q_2,q_3,q_4)
     df = pd.DataFrame(df)
+    df.to_csv('steps_unsorted.csv',index=False)
     df = df.sort_values(by='step')
+    df.to_csv('steps_sorted.csv',index=False)
     print(df)
     
 
